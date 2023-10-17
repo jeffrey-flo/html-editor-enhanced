@@ -70,7 +70,7 @@ class _HtmlEditorExampleState extends State<HtmlEditorExample> {
                 controller: controller,
                 htmlEditorOptions: HtmlEditorOptions(
                   hint: 'Your text here...',
-                  shouldEnsureVisible: true,
+                  shouldEnsureVisible: false,
                   //initialText: "<p>text content initial, if any</p>",
                 ),
                 htmlToolbarOptions: HtmlToolbarOptions(

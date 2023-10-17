@@ -1,15 +1,15 @@
-export 'dart:html';
-
 import 'dart:convert';
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:html' as html;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
-import 'package:html_editor_enhanced/utils/utils.dart';
-// ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html;
 import 'package:html_editor_enhanced/utils/shims/dart_ui.dart' as ui;
+import 'package:html_editor_enhanced/utils/utils.dart';
+
+export 'dart:html';
 
 /// The HTML Editor widget itself, for web (uses IFrameElement)
 class HtmlEditorWidget extends StatefulWidget {
@@ -184,10 +184,10 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
     summernoteCallbacks = summernoteCallbacks + '}';
     var darkCSS = '';
     if ((Theme.of(widget.initBC).brightness == Brightness.dark ||
-            widget.htmlEditorOptions.darkMode == true) &&
+        widget.htmlEditorOptions.darkMode == true) &&
         widget.htmlEditorOptions.darkMode != false) {
       darkCSS =
-          '<link href=\"assets/packages/html_editor_enhanced/assets/summernote-lite-dark.css\" rel=\"stylesheet\">';
+      '<link href=\"assets/packages/html_editor_enhanced/assets/summernote-lite-dark.css\" rel=\"stylesheet\">';
     }
     var jsCallbacks = '';
     if (widget.callbacks != null) {
@@ -457,18 +457,18 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
         .replaceFirst('<!--headString-->', headString)
         .replaceFirst('<!--summernoteScripts-->', summernoteScripts)
         .replaceFirst('"jquery.min.js"',
-            '"assets/packages/html_editor_enhanced/assets/jquery.min.js"')
+        '"assets/packages/html_editor_enhanced/assets/jquery.min.js"')
         .replaceFirst('"summernote-lite.min.css"',
-            '"assets/packages/html_editor_enhanced/assets/summernote-lite.min.css"')
+        '"assets/packages/html_editor_enhanced/assets/summernote-lite.min.css"')
         .replaceFirst('"summernote-lite.min.js"',
-            '"assets/packages/html_editor_enhanced/assets/summernote-lite.min.js"');
+        '"assets/packages/html_editor_enhanced/assets/summernote-lite.min.js"');
     if (widget.callbacks != null) addJSListener(widget.callbacks!);
     final iframe = html.IFrameElement()
       ..width = MediaQuery.of(widget.initBC).size.width.toString() //'800'
       ..height = widget.htmlEditorOptions.autoAdjustHeight
           ? actualHeight.toString()
           : widget.otherOptions.height.toString()
-      // ignore: unsafe_html, necessary to load HTML string
+    // ignore: unsafe_html, necessary to load HTML string
       ..srcdoc = htmlString
       ..style.border = 'none'
       ..style.overflow = 'hidden'
@@ -513,9 +513,8 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
                 widget.callbacks!.onChangeContent != null) {
               widget.callbacks!.onChangeContent!.call(data['contents']);
             }
-            if (widget.htmlEditorOptions.shouldEnsureVisible &&
-                Scrollable.of(context) != null) {
-              Scrollable.of(context)!.position.ensureVisible(
+            if (widget.htmlEditorOptions.shouldEnsureVisible) {
+              Scrollable.of(context).position.ensureVisible(
                   context.findRenderObject()!,
                   duration: const Duration(milliseconds: 100),
                   curve: Curves.easeIn);
@@ -548,12 +547,12 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
       child: Column(
         children: <Widget>[
           widget.htmlToolbarOptions.toolbarPosition ==
-                  ToolbarPosition.aboveEditor
+              ToolbarPosition.aboveEditor
               ? ToolbarWidget(
-                  key: toolbarKey,
-                  controller: widget.controller,
-                  htmlToolbarOptions: widget.htmlToolbarOptions,
-                  callbacks: widget.callbacks)
+              key: toolbarKey,
+              controller: widget.controller,
+              htmlToolbarOptions: widget.htmlToolbarOptions,
+              callbacks: widget.callbacks)
               : Container(height: 0, width: 0),
           Expanded(
               child: Directionality(
@@ -573,12 +572,12 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
                         }
                       }))),
           widget.htmlToolbarOptions.toolbarPosition ==
-                  ToolbarPosition.belowEditor
+              ToolbarPosition.belowEditor
               ? ToolbarWidget(
-                  key: toolbarKey,
-                  controller: widget.controller,
-                  htmlToolbarOptions: widget.htmlToolbarOptions,
-                  callbacks: widget.callbacks)
+              key: toolbarKey,
+              controller: widget.controller,
+              htmlToolbarOptions: widget.htmlToolbarOptions,
+              callbacks: widget.callbacks)
               : Container(height: 0, width: 0),
         ],
       ),
@@ -750,8 +749,8 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
                 data['error'].contains('base64')
                     ? UploadError.jsException
                     : data['error'].contains('unsupported')
-                        ? UploadError.unsupportedFile
-                        : UploadError.exceededMaxSize);
+                    ? UploadError.unsupportedFile
+                    : UploadError.exceededMaxSize);
           } else {
             var map = <String, dynamic>{
               'lastModified': data['lastModified'],
@@ -768,8 +767,8 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
                 data['error'].contains('base64')
                     ? UploadError.jsException
                     : data['error'].contains('unsupported')
-                        ? UploadError.unsupportedFile
-                        : UploadError.exceededMaxSize);
+                    ? UploadError.unsupportedFile
+                    : UploadError.exceededMaxSize);
           }
         }
         if (data['type'].contains('onKeyDown')) {

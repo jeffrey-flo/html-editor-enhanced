@@ -72,7 +72,7 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
       filePath = widget.htmlEditorOptions.filePath!;
     } else if (widget.plugins.isEmpty) {
       filePath =
-          'packages/html_editor_enhanced/assets/summernote-no-plugins.html';
+      'packages/html_editor_enhanced/assets/summernote-no-plugins.html';
     } else {
       filePath = 'packages/html_editor_enhanced/assets/summernote.html';
     }
@@ -93,7 +93,7 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
       });
       await widget.controller.editorController!.evaluateJavascript(
           source:
-              "\$('div.note-editable').outerHeight(${widget.otherOptions.height - (toolbarKey.currentContext?.size?.height ?? 0)});");
+          "\$('div.note-editable').outerHeight(${widget.otherOptions.height - (toolbarKey.currentContext?.size?.height ?? 0)});");
     }
   }
 
@@ -121,12 +121,12 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
           child: Column(
             children: [
               widget.htmlToolbarOptions.toolbarPosition ==
-                      ToolbarPosition.aboveEditor
+                  ToolbarPosition.aboveEditor
                   ? ToolbarWidget(
-                      key: toolbarKey,
-                      controller: widget.controller,
-                      htmlToolbarOptions: widget.htmlToolbarOptions,
-                      callbacks: widget.callbacks)
+                  key: toolbarKey,
+                  controller: widget.controller,
+                  htmlToolbarOptions: widget.htmlToolbarOptions,
+                  callbacks: widget.callbacks)
                   : Container(height: 0, width: 0),
               Expanded(
                 child: InAppWebView(
@@ -155,13 +155,13 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                         loadWithOverviewMode: true,
                       )),
                   initialUserScripts:
-                      widget.htmlEditorOptions.mobileInitialScripts
-                          as UnmodifiableListView<UserScript>?,
+                  widget.htmlEditorOptions.mobileInitialScripts
+                  as UnmodifiableListView<UserScript>?,
                   contextMenu: widget.htmlEditorOptions.mobileContextMenu
-                      as ContextMenu?,
+                  as ContextMenu?,
                   gestureRecognizers: {
                     Factory<VerticalDragGestureRecognizer>(
-                        () => VerticalDragGestureRecognizer()),
+                            () => VerticalDragGestureRecognizer()),
                     Factory<LongPressGestureRecognizer>(() =>
                         LongPressGestureRecognizer(
                             duration: widget
@@ -170,8 +170,8 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                   shouldOverrideUrlLoading: (controller, action) async {
                     if (!action.request.url.toString().contains(filePath)) {
                       return (await widget.callbacks?.onNavigationRequestMobile
-                                  ?.call(action.request.url.toString()))
-                              as NavigationActionPolicy? ??
+                          ?.call(action.request.url.toString()))
+                      as NavigationActionPolicy? ??
                           NavigationActionPolicy.ALLOW;
                     }
                     return NavigationActionPolicy.ALLOW;
@@ -180,11 +180,10 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                     print(message.message);
                   },
                   onWindowFocus: (controller) async {
-                    if (widget.htmlEditorOptions.shouldEnsureVisible &&
-                        Scrollable.of(context) != null) {
-                      await Scrollable.of(context)!.position.ensureVisible(
-                            context.findRenderObject()!,
-                          );
+                    if (widget.htmlEditorOptions.shouldEnsureVisible) {
+                      await Scrollable.of(context).position.ensureVisible(
+                        context.findRenderObject()!,
+                      );
                     }
                     if (widget.htmlEditorOptions.adjustHeightForKeyboard &&
                         mounted &&
@@ -269,8 +268,8 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                               (p == widget.plugins.last
                                   ? ']]\n'
                                   : p.getToolbarString().isNotEmpty
-                                      ? ', '
-                                      : '');
+                                  ? ', '
+                                  : '');
                           if (p is SummernoteAtMention) {
                             summernoteCallbacks = summernoteCallbacks +
                                 """
@@ -448,12 +447,12 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                       """);
                       await controller.evaluateJavascript(
                           source:
-                              "document.onselectionchange = onSelectionChange; console.log('done');");
+                          "document.onselectionchange = onSelectionChange; console.log('done');");
                       await controller.evaluateJavascript(
                           source:
-                              "document.getElementsByClassName('note-editable')[0].setAttribute('inputmode', '${describeEnum(widget.htmlEditorOptions.inputType)}');");
+                          "document.getElementsByClassName('note-editable')[0].setAttribute('inputmode', '${describeEnum(widget.htmlEditorOptions.inputType)}');");
                       if ((Theme.of(context).brightness == Brightness.dark ||
-                              widget.htmlEditorOptions.darkMode == true) &&
+                          widget.htmlEditorOptions.darkMode == true) &&
                           widget.htmlEditorOptions.darkMode != false) {
                         //todo fix for iOS (https://github.com/pichillilorenzo/flutter_inappwebview/issues/695)
                         var darkCSS =
@@ -476,22 +475,22 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                               } else {
                                 setState(mounted, this.setState, () {
                                   docHeight = (double.tryParse(
-                                              height.first.toString()) ??
-                                          widget.otherOptions.height) +
+                                      height.first.toString()) ??
+                                      widget.otherOptions.height) +
                                       (toolbarKey
-                                              .currentContext?.size?.height ??
+                                          .currentContext?.size?.height ??
                                           0);
                                 });
                               }
                             });
                         await controller.evaluateJavascript(
                             source:
-                                "var height = document.body.scrollHeight; window.flutter_inappwebview.callHandler('setHeight', height);");
+                            "var height = document.body.scrollHeight; window.flutter_inappwebview.callHandler('setHeight', height);");
                       }
                       //reset the editor's height if the keyboard disappears at any point
                       if (widget.htmlEditorOptions.adjustHeightForKeyboard) {
                         var keyboardVisibilityController =
-                            KeyboardVisibilityController();
+                        KeyboardVisibilityController();
                         keyboardVisibilityController.onChange
                             .listen((bool visible) {
                           if (!visible && mounted) {
@@ -504,7 +503,7 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                           handlerName: 'totalChars',
                           callback: (keyCode) {
                             widget.controller.characterCount =
-                                keyCode.first as int;
+                            keyCode.first as int;
                           });
                       //disable editor if necessary
                       if (widget.htmlEditorOptions.disabled &&
@@ -526,11 +525,10 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                       controller.addJavaScriptHandler(
                           handlerName: 'onChangeContent',
                           callback: (contents) {
-                            if (widget.htmlEditorOptions.shouldEnsureVisible &&
-                                Scrollable.of(context) != null) {
-                              Scrollable.of(context)!.position.ensureVisible(
-                                    context.findRenderObject()!,
-                                  );
+                            if (widget.htmlEditorOptions.shouldEnsureVisible) {
+                              Scrollable.of(context).position.ensureVisible(
+                                context.findRenderObject()!,
+                              );
                             }
                             if (widget.callbacks != null &&
                                 widget.callbacks!.onChangeContent != null) {
@@ -543,12 +541,12 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                 ),
               ),
               widget.htmlToolbarOptions.toolbarPosition ==
-                      ToolbarPosition.belowEditor
+                  ToolbarPosition.belowEditor
                   ? ToolbarWidget(
-                      key: toolbarKey,
-                      controller: widget.controller,
-                      htmlToolbarOptions: widget.htmlToolbarOptions,
-                      callbacks: widget.callbacks)
+                  key: toolbarKey,
+                  controller: widget.controller,
+                  htmlToolbarOptions: widget.htmlToolbarOptions,
+                  callbacks: widget.callbacks)
                   : Container(height: 0, width: 0),
             ],
           ),
@@ -730,8 +728,8 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                   args.last.contains('base64')
                       ? UploadError.jsException
                       : args.last.contains('unsupported')
-                          ? UploadError.unsupportedFile
-                          : UploadError.exceededMaxSize);
+                      ? UploadError.unsupportedFile
+                      : UploadError.exceededMaxSize);
             } else {
               var file = fileUploadFromJson(args.first.toString());
               c.onImageUploadError!.call(
@@ -740,8 +738,8 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                   args.last.contains('base64')
                       ? UploadError.jsException
                       : args.last.contains('unsupported')
-                          ? UploadError.unsupportedFile
-                          : UploadError.exceededMaxSize);
+                      ? UploadError.unsupportedFile
+                      : UploadError.exceededMaxSize);
             }
           });
     }
